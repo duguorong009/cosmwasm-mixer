@@ -22,9 +22,11 @@ mod hasher {
 }
 
 pub mod poseidon {
+    use serde::{Serialize, Deserialize};
+
     use crate::poseidon::hasher::{ArkworksPoseidonHasherBn254};
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Serialize, Deserialize)]
     pub struct Poseidon {
         hasher_params_width_3_bytes: Vec<u8>,
         hasher_params_width_4_bytes: Vec<u8>,
@@ -44,6 +46,15 @@ pub mod poseidon {
     pub type Result<T> = core::result::Result<T, Error>;
 
     impl Poseidon {
+        
+        pub fn new() -> Self {
+            Self {
+                hasher_params_width_3_bytes: arkworks_utils::utils::bn254_x5_3::get_poseidon_bn254_x5_3::<ark_bn254::Fr>().to_bytes(),
+                hasher_params_width_4_bytes: arkworks_utils::utils::bn254_x5_4::get_poseidon_bn254_x5_4::<ark_bn254::Fr>().to_bytes(),
+                hasher_params_width_5_bytes: arkworks_utils::utils::bn254_x5_5::get_poseidon_bn254_x5_5::<ark_bn254::Fr>().to_bytes(),
+            }
+        }
+
         pub fn hash(&self, inputs: Vec<[u8; 32]>) -> Result<[u8; 32]> {
             let num_inputs = inputs.len();
             let mut packed_inputs = Vec::new();

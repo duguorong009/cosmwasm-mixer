@@ -14,7 +14,7 @@ pub const ROOT_HISTORY_SIZE: u32 = 100;
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct Mixer {
     pub initialized: bool,
-    pub desposit_size: Uint256,
+    pub deposit_size: Uint256,
     pub merkle_tree: MerkleTree,
     // used_nullifiers: HashMap<[u8; 32], bool>,
     // poseidon: Poseidon, 
@@ -45,11 +45,11 @@ pub struct MerkleTree {
 // MerkleTree "filled_subtrees" Map
 pub const FILLEDSUBTREES: Map<String, [u8; 32]> = Map::new("filled_subtrees");
 
-fn save_subtree(store: &mut dyn Storage, k: u32, data: &[u8; 32]) -> StdResult<()> {
+pub fn save_subtree(store: &mut dyn Storage, k: u32, data: &[u8; 32]) -> StdResult<()> {
     FILLEDSUBTREES.save(store, k.to_string(), data)
 }
 
-fn read_subtree(store: &dyn Storage, k: u32) -> StdResult<[u8; 32]> {
+pub fn read_subtree(store: &dyn Storage, k: u32) -> StdResult<[u8; 32]> {
     FILLEDSUBTREES.load(store, k.to_string())
 }
 
@@ -57,11 +57,11 @@ fn read_subtree(store: &dyn Storage, k: u32) -> StdResult<[u8; 32]> {
 // MerkleTree Roots Map
 pub const MERKLEROOTS: Map<String, [u8; 32]> = Map::new("merkle_roots");
 
-fn save_root(store: &mut dyn Storage, k: u32, data: &[u8; 32]) -> StdResult<()> {
+pub fn save_root(store: &mut dyn Storage, k: u32, data: &[u8; 32]) -> StdResult<()> {
     MERKLEROOTS.save(store, k.to_string(), data)
 }
 
-fn read_root(store: &dyn Storage, k: u32) -> StdResult<[u8; 32]> {
+pub fn read_root(store: &dyn Storage, k: u32) -> StdResult<[u8; 32]> {
     MERKLEROOTS.load(store, k.to_string())
 }
 

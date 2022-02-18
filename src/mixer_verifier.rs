@@ -34,9 +34,11 @@ mod verifier {
 
 
 pub mod mixer_verifier {
+    use serde::{Serialize, Deserialize};
+
     use crate::mixer_verifier::verifier::{ArkworksVerifierBn254};
 
-    #[derive(Clone, Debug, PartialEq)]
+    #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
     pub struct MixerVerifier {
         vk_bytes: Vec<u8>,
     }
