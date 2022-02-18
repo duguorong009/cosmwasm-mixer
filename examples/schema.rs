@@ -3,8 +3,8 @@ use std::fs::create_dir_all;
 
 use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
 
-use cosmwasm_mixer::msg::{CountResponse, ExecuteMsg, InstantiateMsg, QueryMsg};
-use cosmwasm_mixer::state::State;
+use cosmwasm_mixer::msg::{ ExecuteMsg, InstantiateMsg, QueryMsg, DepositMsg, WithdrawMsg};
+use cosmwasm_mixer::state::{Mixer, MerkleTree};
 
 fn main() {
     let mut out_dir = current_dir().unwrap();
@@ -15,6 +15,8 @@ fn main() {
     export_schema(&schema_for!(InstantiateMsg), &out_dir);
     export_schema(&schema_for!(ExecuteMsg), &out_dir);
     export_schema(&schema_for!(QueryMsg), &out_dir);
-    export_schema(&schema_for!(State), &out_dir);
-    export_schema(&schema_for!(CountResponse), &out_dir);
+    export_schema(&schema_for!(DepositMsg), &out_dir);
+    export_schema(&schema_for!(WithdrawMsg), &out_dir);
+    export_schema(&schema_for!(Mixer), &out_dir);
+    export_schema(&schema_for!(MerkleTree), &out_dir);
 }
