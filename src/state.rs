@@ -24,7 +24,7 @@ pub struct Mixer {
 pub const MIXER: Item<Mixer> = Item::new("mixer");
 
 // Struct to save the use of "nullifiers"
-pub const NULLIFIERS: Map<[u8; 32], bool> = Map::new("used_nullifers");
+pub const NULLIFIERS: Map<Vec<u8>, bool> = Map::new("used_nullifers");
 
 // "Poseidon hasher"
 pub const POSEIDON: Item<Poseidon> = Item::new("poseidon");
@@ -73,7 +73,7 @@ impl MerkleTree {
 
     pub fn insert(&mut self, hasher: Poseidon, leaf: [u8; 32], store: &mut dyn Storage) -> Result<u32, ContractError> {
         let next_index = self.next_index;
-        assert!(!next_index == u32::from(2u32.pow(self.levels as u32)), "Merkle tree is full");
+        assert!(next_index != u32::from(2u32.pow(self.levels as u32)), "Merkle tree is full");
 
         let mut current_index = next_index;
         let mut current_level_hash = leaf;

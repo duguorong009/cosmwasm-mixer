@@ -17,20 +17,20 @@ pub enum ExecuteMsg {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct DepositMsg {
-    from: Option<String>,
-    commitment: Option<[u8; 32]>,
-    value: Uint256,
+    pub from: Option<String>,
+    pub commitment: Option<[u8; 32]>,
+    pub value: Uint256,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct WithdrawMsg {
-    proof_bytes: Vec<u8>,
-    root: [u8; 32],
-    nullifier_hash: [u8; 32],
-    recipient: String,
-    relayer: String,
-    fee: Uint256,
-    refund: Uint256,
+    pub proof_bytes: Vec<u8>,
+    pub root: [u8; 32],
+    pub nullifier_hash: [u8; 32],
+    pub recipient: String,
+    pub relayer: String,
+    pub fee: Uint256,
+    pub refund: Uint256,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
