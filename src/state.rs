@@ -1,7 +1,7 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use cosmwasm_std::{Addr, Uint256, Storage, StdResult};
+use cosmwasm_std::{Uint256, Storage, StdResult};
 use cw_storage_plus::{Item, Map};
 
 use crate::mixer_verifier::MixerVerifier;
@@ -85,11 +85,11 @@ impl MerkleTree {
                 left = current_level_hash;
                 right = zeroes::zeroes(i);
 
-                // TODO
+    
                 // self.filled_subtrees[&i] = current_level_hash;
                 save_subtree(store, i, &current_level_hash)?
             } else {
-                // TODO
+    
                 // left = self.filled_subtrees[&i];
                 left = read_subtree(store, i).unwrap_or( [0_u8; 32]);
 
@@ -102,7 +102,6 @@ impl MerkleTree {
 
         let new_root_index = (self.current_root_index + 1) % ROOT_HISTORY_SIZE;
         self.current_root_index = new_root_index;
-        // TODO
         // self.roots[&new_root_index] = current_level_hash;
         save_root(store, new_root_index, &current_level_hash)?;
         self.next_index = next_index + 1;
@@ -115,7 +114,6 @@ impl MerkleTree {
         }
 
         let mut i = self.current_root_index;
-        // TODO
         let ith_root = read_root(store, i).unwrap_or([0_u8; 32]);
         if root == ith_root {
         // if root == self.roots[&i] {
@@ -128,7 +126,7 @@ impl MerkleTree {
 
         i = i - 1;
         while i != self.current_root_index {
-            // TODO
+
             let ith_root = read_root(store, i).unwrap_or([0_u8; 32]);
             if root == ith_root {
             // if root == self.roots[&i] {
@@ -139,7 +137,7 @@ impl MerkleTree {
                 i = ROOT_HISTORY_SIZE;
             }
 
-            // TODO
+
             if root == ith_root {
             // if root == self.roots[&i] {
                 return true;
