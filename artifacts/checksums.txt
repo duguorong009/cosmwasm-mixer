@@ -1,1 +1,1 @@
-77c7d522aa2c482f2c18d464a4b44e2e44f7f96bfe07e5e68693734fef4182e4  cosmwasm_mixer.wasm
+1b0b93db6e4d1f05c45509127c092f0d678ece395cc3739e9a00aa61dbbc7c36  cosmwasm_mixer.wasm
