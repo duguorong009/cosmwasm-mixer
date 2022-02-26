@@ -45,7 +45,7 @@ pub fn instantiate(
     let mixer: Mixer = Mixer {
         initialized: true,
         deposit_size: Uint256::from(msg.deposit_size.u128()),
-        merkle_tree: merkle_tree,
+        merkle_tree,
     };
     MIXER.save(deps.storage, &mixer)?;
 
@@ -92,7 +92,7 @@ pub fn try_deposit(
         .into_iter()
         .filter(|x| x.denom == "uusd")
         .collect();
-    if sent_uusd.len() == 0 || Uint256::from(sent_uusd[0].amount) < mixer.deposit_size {
+    if sent_uusd.is_empty() || Uint256::from(sent_uusd[0].amount) < mixer.deposit_size {
         return Err(ContractError::InsufficientFunds {});
     }
 
@@ -111,7 +111,7 @@ pub fn try_deposit(
             &Mixer {
                 initialized: mixer.initialized,
                 deposit_size: mixer.deposit_size,
-                merkle_tree: merkle_tree,
+                merkle_tree,
             },
         )?;
         Ok(Response::new().add_attributes(vec![
@@ -119,9 +119,9 @@ pub fn try_deposit(
             attr("result", res.to_string()),
         ]))
     } else {
-        return Err(ContractError::Std(StdError::NotFound {
+        Err(ContractError::Std(StdError::NotFound {
             kind: "Commitment".to_string(),
-        }));
+        }))
     }
 }
 pub fn try_withdraw(
@@ -269,7 +269,7 @@ fn truncate_and_pad(t: &[u8]) -> Vec<u8> {
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
-pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
+pub fn query(_deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
         // TODO
     }
